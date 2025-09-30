@@ -1,0 +1,119 @@
+package com.vehiclemarketplace.infrastructure.persistence.entities.buyer
+
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.vehiclemarketplace.domain.model.buyer.Buyer
+import com.vehiclemarketplace.domain.model.buyer.Document
+import com.vehiclemarketplace.infrastructure.persistence.converter.AddressEntityConverter
+import com.vehiclemarketplace.infrastructure.persistence.entities.BaseEntity
+import com.vehiclemarketplace.infrastructure.persistence.entities.buyer.AddressEntity
+import jakarta.persistence.*
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
+
+@Entity
+@Table(name = "buyers")
+class BuyerEntity(
+
+    @Column(nullable = false)
+    var name: String,
+
+    @Column(nullable = false)
+    var email: String,
+
+    @Column(nullable = false)
+    var phone: String,
+
+    @Column(name = "birth_date", nullable = false)
+    var birthDate: LocalDate,
+
+    @Column(name = "address", columnDefinition = "JSONB", nullable = false)
+    @Convert(converter = AddressEntityConverter::class)
+    var address: AddressEntity,
+
+    @OneToMany(mappedBy = "buyerId", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var documents: MutableList<BuyerDocumentEntity> = mutableListOf()
+) : BaseEntity() {
+
+    companion object {
+        private val objectMapper = ObjectMapper()
+
+        fun fromDomain(buyer: Buyer): BuyerEntity {
+            return BuyerEntity(
+                name = buyer.name,
+                email = buyer.email,
+                phone = buyer.phone,
+                birthDate = buyer.birthDate,
+                address = AddressEntity.fromDomain(buyer.address),
+            ).apply {
+                id = buyer.id
+                createdAt = buyer.createdAt
+                updatedAt = buyer.updatedAt
+
+                // Add documents
+                documents.addAll(buyer.documents.map { doc -> 
+                    BuyerDocumentEntity.fromDomain(doc, id ?: UUID.randomUUID())
+                })
+            }
+        }
+    }
+
+    fun toDomain(): Buyer {
+        return Buyer(
+            id = id,
+            name = name,
+            email = email,
+            phone = phone,
+            birthDate = birthDate,
+            address = address.toDomain(),
+            documents = documents.map { it.toDomain() },
+            createdAt = createdAt,
+            updatedAt = updatedAt,
+        )
+    }
+}
+
+@Entity
+@Table(name = "buyer_documents")
+class BuyerDocumentEntity(
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    var id: UUID? = null,
+    
+    @Column(name = "buyer_id")
+    var buyerId: UUID,
+    
+    @Column(name = "document_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    var type: com.vehiclemarketplace.domain.model.buyer.DocumentType,
+    
+    @Column(nullable = false)
+    var number: String,
+    
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    var createdAt: LocalDateTime = LocalDateTime.now(),
+    
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+    var updatedAt: LocalDateTime = LocalDateTime.now()
+) {
+    companion object {
+        fun fromDomain(document: Document, buyerId: UUID): BuyerDocumentEntity {
+            return BuyerDocumentEntity(
+                buyerId = buyerId,
+                type = document.type,
+                number = document.number
+            )
+        }
+    }
+    
+    fun toDomain(): Document {
+        return Document(
+            type = type,
+            number = number
+        )
+    }
+}

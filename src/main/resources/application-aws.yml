@@ -1,0 +1,52 @@
+aws:
+  region: ${AWS_REGION:us-east-1}
+  credentials:
+    access-key: ${AWS_ACCESS_KEY:}
+    secret-key: ${AWS_SECRET_KEY:}
+
+  kms:
+    key-id: ${AWS_KMS_KEY_ID:}
+
+  cognito:
+    user-pool-id: ${AWS_COGNITO_USER_POOL_ID:}
+    client-id: ${AWS_COGNITO_CLIENT_ID:}
+    client-secret: ${AWS_COGNITO_CLIENT_SECRET:}
+
+  waf:
+    web-acl-id: ${AWS_WAF_WEB_ACL_ID:}
+
+  cloudwatch:
+    log-group: ${AWS_CLOUDWATCH_LOG_GROUP:/vehicle-marketplace/logs}
+    metrics:
+      namespace: ${AWS_CLOUDWATCH_METRICS_NAMESPACE:VehicleMarketplace}
+
+  cloudtrail:
+    trail-name: ${AWS_CLOUDTRAIL_TRAIL_NAME:vehicle-marketplace-trail}
+
+  guardduty:
+    detector-id: ${AWS_GUARDDUTY_DETECTOR_ID:}
+
+  secrets:
+    database-credentials: ${AWS_SECRET_DATABASE_NAME:vehicle-marketplace/database}
+    payment-credentials: ${AWS_SECRET_PAYMENT_NAME:vehicle-marketplace/payment}
+    jwt-secret: ${AWS_SECRET_JWT_NAME:vehicle-marketplace/jwt}
+
+spring:
+  cloud:
+    aws:
+      region:
+        static: ${AWS_REGION:us-east-1}
+      stack:
+        auto: false
+
+security:
+  jwt:
+    secret-source: ${JWT_SECRET_SOURCE:local}
+    expiration-ms: 86400000
+
+  logging:
+    sensitive-data-fields: email,phone,cpf,rg,address,creditCard
+    audit:
+      enabled: true
+    data-access:
+      enabled: true
