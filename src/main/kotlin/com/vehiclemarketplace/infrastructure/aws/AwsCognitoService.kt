@@ -1,5 +1,6 @@
-package com.vehiclemarketplace.infrastructure.security
+package com.vehiclemarketplace.infrastructure.aws
 
+import com.vehiclemarketplace.infrastructure.security.AuditService
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User

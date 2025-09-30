@@ -9,7 +9,7 @@ import com.mercadopago.exceptions.MPApiException
 import com.mercadopago.exceptions.MPException
 import com.vehiclemarketplace.domain.model.buyer.Buyer
 import com.vehiclemarketplace.domain.model.buyer.DocumentType
-import com.vehiclemarketplace.infrastructure.security.AwsSecretsManagerService
+import com.vehiclemarketplace.infrastructure.aws.AwsSecretsManagerService
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.math.BigDecimal

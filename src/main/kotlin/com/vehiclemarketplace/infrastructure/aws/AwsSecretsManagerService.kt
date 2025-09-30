@@ -1,4 +1,4 @@
-package com.vehiclemarketplace.infrastructure.security
+package com.vehiclemarketplace.infrastructure.aws
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory

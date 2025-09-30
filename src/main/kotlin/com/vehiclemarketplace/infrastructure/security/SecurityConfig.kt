@@ -1,5 +1,6 @@
 package com.vehiclemarketplace.infrastructure.security
 
+import com.vehiclemarketplace.infrastructure.aws.CognitoAuthenticationProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod

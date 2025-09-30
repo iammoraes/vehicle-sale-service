@@ -18,8 +18,6 @@ class JwtRequestFilter(
     private val auditService: AuditService
 ) : OncePerRequestFilter() {
 
-    private val logger = LoggerFactory.getLogger(javaClass)
-
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,

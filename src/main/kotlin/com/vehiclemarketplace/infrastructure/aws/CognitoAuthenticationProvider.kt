@@ -1,4 +1,4 @@
-package com.vehiclemarketplace.infrastructure.security
+package com.vehiclemarketplace.infrastructure.aws
 
 import kotlinx.coroutines.runBlocking
 import org.springframework.security.authentication.AuthenticationProvider

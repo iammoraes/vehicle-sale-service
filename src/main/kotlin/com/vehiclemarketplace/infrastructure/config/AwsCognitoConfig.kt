@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient
-import com.vehiclemarketplace.infrastructure.security.AwsSecretsManagerService
+import com.vehiclemarketplace.infrastructure.aws.AwsSecretsManagerService
 import javax.annotation.PostConstruct
 
 @Configuration

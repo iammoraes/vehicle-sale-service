@@ -1,4 +1,4 @@
-package com.vehiclemarketplace.infrastructure.security
+package com.vehiclemarketplace.infrastructure.aws
 
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value

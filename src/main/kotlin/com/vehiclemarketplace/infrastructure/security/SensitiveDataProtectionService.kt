@@ -1,5 +1,6 @@
 package com.vehiclemarketplace.infrastructure.security
 
+import com.vehiclemarketplace.infrastructure.aws.AwsDataProtectionService
 import com.vehiclemarketplace.infrastructure.persistence.entities.buyer.BuyerEntity
 import com.vehiclemarketplace.infrastructure.persistence.entities.buyer.DocumentEntity
 import com.vehiclemarketplace.infrastructure.persistence.entities.sale.PaymentEntity
